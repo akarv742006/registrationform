@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Contact Form</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Orbitron', sans-serif;
+        background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+        color: #00fff7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .cyber-form {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 30px;
+        border: 2px solid #00fff7;
+        border-radius: 15px;
+        box-shadow: 0 0 20px #00fff7, inset 0 0 20px #00fff7;
+        max-width: 400px;
+        width: 90%;
+        animation: glowPulse 2s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+        from { box-shadow: 0 0 20px #00fff7, inset 0 0 20px #00fff7; }
+        to { box-shadow: 0 0 40px #ff00ff, inset 0 0 40px #ff00ff; }
+    }
+
+    h2 {
+        text-align: center;
+        text-shadow: 0 0 10px #00fff7, 0 0 20px #ff00ff;
+        font-size: 24px;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 12px;
+        border: none;
+        outline: none;
+        background: rgba(255, 255, 255, 0.05);
+        color: #00fff7;
+        border-radius: 8px;
+        font-size: 16px;
+        box-shadow: 0 0 10px #00fff7;
+        transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+        box-shadow: 0 0 15px #ff00ff, 0 0 25px #ff00ff;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        background: linear-gradient(90deg, #00fff7, #ff00ff);
+        border: none;
+        color: #000;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: linear-gradient(90deg, #ff00ff, #00fff7);
+        transform: scale(1.05);
+    }
+
+    .error {
+        color: #ff4d4d;
+        font-size: 14px;
+        margin-top: 5px;
+        text-shadow: 0 0 5px #ff4d4d;
+    }
+
+    .success {
+        color: #00ff7f;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 16px;
+        text-shadow: 0 0 5px #00ff7f;
+    }
+
+    @media (max-width: 500px) {
+        h2 { font-size: 20px; }
+        button { font-size: 16px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="cyber-form">
+    <h2>Contact the System</h2>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Enter your name">
+        <div id="nameError" class="error"></div>
+
+        <input type="email" id="email" placeholder="Enter your email">
+        <div id="emailError" class="error"></div>
+
+        <textarea id="message" rows="4" placeholder="Enter your message"></textarea>
+        <div id="messageError" class="error"></div>
+
+        <button type="submit">Send Transmission</button>
+        <div id="successMsg" class="success"></div>
+    </form>
+</div>
+
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let message = document.getElementById("message").value.trim();
+
+        let nameError = document.getElementById("nameError");
+        let emailError = document.getElementById("emailError");
+        let messageError = document.getElementById("messageError");
+        let successMsg = document.getElementById("successMsg");
+
+        let valid = true;
+        nameError.textContent = "";
+        emailError.textContent = "";
+        messageError.textContent = "";
+        successMsg.textContent = "";
+
+        if (name === "") {
+            nameError.textContent = "Name is required.";
+            valid = false;
+        }
+
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (email === "") {
+            emailError.textContent = "Email is required.";
+            valid = false;
+        } else if (!email.match(emailPattern)) {
+            emailError.textContent = "Enter a valid email address.";
+            valid = false;
+        }
+
+        if (message === "") {
+            messageError.textContent = "Message cannot be empty.";
+            valid = false;
+        }
+
+        if (valid) {
+            successMsg.textContent = "✅ Transmission sent successfully!";
+            document.getElementById("contactForm").reset();
+        }
+    });
+</script>
+
+</body>
+</html>
